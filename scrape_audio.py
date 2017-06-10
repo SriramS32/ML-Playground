@@ -1,11 +1,13 @@
 from argparse import ArgumentParser
 from bs4 import BeautifulSoup
 from multiprocessing import Pool
+from redis import StrictRedis
 from time import time
 from urllib2 import urlopen, URLError
 import os, sys
 
 links = ["http://www.kdfc.com/series/kdfcs-the-state-of-the-arts/"]
+redis = StrictRedis(host='localhost', port=6379, db=0)
 
 def parse_data(args):
 	""" Parses audio links from radio websites using bs4 and multiprocessing.
@@ -51,7 +53,8 @@ def download_audio(audio_entry):
 	# Unwrapping audio entry
 	audio_link = audio_entry[0]
 	file_name = audio_entry[1]
-
+	if redis.exists(file_name):
+		return
 	try:
 		u = urlopen(audio_link)
 	except URLError, e:
@@ -67,9 +70,11 @@ def download_audio(audio_entry):
 		if not buffer:
 			break
 		f.write(buffer)
+	redis.set(file_name, 1)
 
 if __name__ == '__main__':
 	parser = ArgumentParser('Parse links.')
 	parser.add_argument('--processes', type=int, help='number of processes to run parallelize')
 	args = parser.parse_args()
+	# redis.flushdb()
 	parse_data(args)
