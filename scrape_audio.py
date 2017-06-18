@@ -76,5 +76,5 @@ if __name__ == '__main__':
 	parser = ArgumentParser('Parse links.')
 	parser.add_argument('--processes', type=int, help='number of processes to run parallelize')
 	args = parser.parse_args()
-	# redis.flushdb()
+	# redis.flushdb() - Can be called to flush the database. Shutting down the server will still save the data (flushing will delete).
 	parse_data(args)
