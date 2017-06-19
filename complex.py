@@ -13,8 +13,8 @@ flags.DEFINE_boolean('fake_data', False, 'If true, uses fake data '
 flags.DEFINE_integer('max_steps', 1000, 'Number of steps to run trainer.')
 flags.DEFINE_float('learning_rate', 0.001, 'Initial learning rate.')
 flags.DEFINE_float('dropout', 0.9, 'Keep probability for training dropout.')
-flags.DEFINE_string('data_dir', '/tmp/data', 'Directory for storing data')
-flags.DEFINE_string('summaries_dir', '/tmp/mnist_logs', 'Summaries directory')
+flags.DEFINE_string('data_dir', 'tmp/data', 'Directory for storing data')
+flags.DEFINE_string('summaries_dir', 'tmp/mnist_logs', 'Summaries directory')
 
 
 def train():
@@ -107,7 +107,7 @@ def train():
       accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     tf.summary.scalar('accuracy', accuracy)
 
-  # Merge all the summaries and write them out to /tmp/mnist_logs (by default)
+  # Merge all the summaries and write them out to tmp/mnist_logs
   merged = tf.summary.merge_all()
   train_writer = tf.summary.FileWriter(FLAGS.summaries_dir + '/train',
                                         sess.graph)
