@@ -75,6 +75,8 @@ def download_audio(audio_entry):
 if __name__ == '__main__':
 	parser = ArgumentParser('Parse links.')
 	parser.add_argument('--processes', type=int, help='number of processes to run parallelize')
+	parser.add_argument('--resetdb', action='store_true', help='Can be called to flush the database. Shutting down the server will still save the data (flushing will delete).')
 	args = parser.parse_args()
-	# redis.flushdb() - Can be called to flush the database. Shutting down the server will still save the data (flushing will delete).
+	if args.resetdb:
+		redis.flushdb() # Can be called to flush the database. Shutting down the server will still save the data (flushing will delete).
 	parse_data(args)
