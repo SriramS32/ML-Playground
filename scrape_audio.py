@@ -6,6 +6,9 @@ from time import time
 from urllib2 import urlopen, URLError
 import os, sys
 
+DEFAULT_NUM_PROC = 8
+DEFAULT_REDIS_VAL = 1
+
 links = ["http://www.kdfc.com/series/kdfcs-the-state-of-the-arts/"]
 redis = StrictRedis(host='localhost', port=6379, db=0)
 
@@ -19,7 +22,7 @@ def parse_data(args):
 		args: cl arguments through argument parser
 	"""
 	video_sublinks = []
-	processes = args.processes if args.processes is not None else 8
+	processes = args.processes if args.processes is not None else DEFAULT_NUM_PROC
 	directory = os.path.join("radio", "KDFC")
 	if not os.path.exists(directory):
 		os.makedirs(directory)
@@ -70,7 +73,7 @@ def download_audio(audio_entry):
 		if not buffer:
 			break
 		f.write(buffer)
-	redis.set(file_name, 1)
+	redis.set(file_name, DEFAULT_REDIS_VAL)
 
 if __name__ == '__main__':
 	parser = ArgumentParser('Parse links.')
