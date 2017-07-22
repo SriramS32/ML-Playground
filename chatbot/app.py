@@ -14,5 +14,9 @@ def upload():
 
 	return json.dumps({"a": "b"})
 
+@app.route('/info')
+def info():
+	return render_template('info.html')
+
 if __name__ == '__main__':
 	app.run(host='localhost', port=9090, threaded=True)
