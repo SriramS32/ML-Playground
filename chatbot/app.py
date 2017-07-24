@@ -1,4 +1,6 @@
+import subprocess
 from flask import Flask, render_template
+from sample import main
 
 app = Flask(__name__)
 
@@ -14,9 +16,10 @@ def upload():
 
 	return json.dumps({"a": "b"})
 
-@app.route('/info')
+@app.route('/charrnn')
 def info():
-	return render_template('info.html')
+	return subprocess.check_output(['python', 'sample.py'], shell=True)
+
 
 if __name__ == '__main__':
 	app.run(host='localhost', port=9090, threaded=True)
