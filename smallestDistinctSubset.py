@@ -24,6 +24,6 @@ from itertools import combinations
 a = sample(xrange(1000), 200)
 b = sample(a, 20)
 set(b).issubset(a)
-# all(x in a for x in b)
+
 def findsubsets(S, m):
 	return set(combinations(S, m))
