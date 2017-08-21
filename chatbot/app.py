@@ -22,4 +22,4 @@ def info():
 
 
 if __name__ == '__main__':
-	app.run(host='localhost', port=9090, threaded=True)
+	app.run(host='localhost', port=9090)
