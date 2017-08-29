@@ -1,3 +1,5 @@
+"""Script for tensorboard visualization of a node that
+provides no usefull results"""
 import tensorflow as tf
 
 a = 2
