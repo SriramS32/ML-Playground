@@ -1,0 +1,48 @@
+CSCI 599 Week 4
+Linear Classification
+Images are flattened to vector.
+W*X + b
+
+Loss functions - Hinge Loss, L1/ L2 loss, cross-entropy
+Regularization
+
+Optimization - Find W that minimizes loss function. usually can't find closed form, so you do iterative descent, take partial derivates of loss wrt. W to move in direction of minima.
+
+can calculate derivative using functions or just add epsilon to weights and see the slope
+
+Issues with numerical solution (local minima, exploding gradient, inexact gradient)
+Errors come from - modeling error, estimation error, opimzation error
+
+Neural Nets
+Forward prop and back prop with sample network.
+Computational Graphs - similar to what Tensorboard displays
+Computational graph, Partial derivates on midterm
+Limitation of backprop - requires all functions to be differentiable
+Algebraic backprop and matrix backpropr
+Multiple Loss functions
+
+CSCI 599 Week 5
+Midterm - computational graph, how to go from left to right and rigth to left.
+Geoff recently said we need to start over (less back_prop) more unsupervised learning.
+Flatten input tensor
+fully connected - every output Wx is a linear combination of the vectorized input (every input)
+# params in layer is x*#hidden nodes.
+In image domain, if you want to reduce params, share weights, downsample.
+When you have a huge amount of parameters and not that many training examples, you will overfit. CNN was a trick to handle this overfitting, reducing the amount of params, so you can deal with your training set.
+Lots of conv layers will result in minimized outputs, deconv will expand output dimension. Stride (S) = 1, Filters (F) = 3 or 5, P = (F-1)/2
+Deconvolutional layer - pad outputs
+Pooling layer - M x N x P -> m x n x P, good for shrinking feature dimension
+Some pooling layers are differentiable like average pooling and max pooling.
+For max pooling, the gradient will be applied to the max alone.
+Linear functions can be collapsed to one function, but you want to have nonlinear activations.
+There is a practical concern and theoretical concerns with choosing the right activation function. Softmax and tanh looks like step a lot and as node gets to ends, slope is 0, so in chain rules, gradient descent gets close to 0. 
+ReLU doesn't have vanishing gradient problem (unless all nodes end up negative)
+Zero gradient when negative for ReLU, Leaky ReLU and ELU fixes that issue
+In practice ReLU doesn't have vanishing gradient problem, only theoretically could the problem arise.
+Activation functions are usually omitted from structure diagrams.
+With introduction of VGG, they brought some standards: it was suggested that all filters to have size of 3x3, max poolings should be placed after each 2 convolutions and the number of filters should be doubled after each max-pooling. And the original proposed VGG network was much deeper than the AlexNet.
+Object detection - sliding window used to be classic approach, now using DL, have a Computer Vision to generate windows (object proposal). Pass window into alexnet and reject if there is low confidence and it doesn't look like anything interesting. 
+Semantic Segmentation - Fully Convolutional Network or Encoding/ Decoding network that has a convolution network followed by a deconvolution network. Labels each pixel with class label. Wnat to encode class by class, then on decode process associate pixels with a class (almost like autoencoder but instead of generating same network you want class labels). Read feature and warp it to what you care about (pixel info).
+Feature concept that represents the inputs as best as possible
+Image Captioning - Encoding image generates feature use CNN, use RNN to do text generation from that feature space.
+CNN to encode audio, use RNN to generate audio (supervised approach)
